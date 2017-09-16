@@ -10,6 +10,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -129,7 +130,6 @@ public class WeatherActivity extends AppCompatActivity {
             loadBingPic();
         }
     }
-
     /**
      * 根据天气id请求城市天气信息
      * @param weatherId
@@ -159,6 +159,9 @@ public class WeatherActivity extends AppCompatActivity {
                             SharedPreferences.Editor editor = PreferenceManager
                                     .getDefaultSharedPreferences(WeatherActivity.this)
                                     .edit();
+                            Log.d("aaa_s",mWeatherId);
+                            mWeatherId = weather.basic.weatherId;
+                            Log.d("aaa_e",mWeatherId);
                             editor.putString("weather",responseText);
                             editor.apply();
                             showWeatherInfo(weather);
@@ -211,7 +214,7 @@ public class WeatherActivity extends AppCompatActivity {
             carWashText.setText(carWash);
             sportText.setText(sport);
             weatherLayout.setVisibility(View.VISIBLE);
-            
+
             Intent intent = new Intent(this, AutoUpdateService.class);
             startService(intent);
         }else{
